@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <title>Login Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      
+    }
+
+    .container {
+      width: 450px;
+      text-align: center;
+      background-color: rgb(235, 254, 255);
+      padding: 50px 50px;
+      margin-top: 20px;
+      border: 5px solid rgb(195, 216, 245);
+
+    }
+
+    .container img.top {
+      width: 100%;
+      height: 180px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .forgot {
+      text-align: right;
+      font-size: 13px;
+      margin: 10px 0 20px;
+      color: #555;
+      cursor: pointer;
+    }
+
+    .forgot:hover {
+      color: #007bff;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;/*khi trỏ vào thì hiện bàn tay */
+      margin-bottom: 20px;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .Phan_tach {
+      margin: 20px 0;
+      color: #777;
+      font-size: 13px;
+    }
+
+    .icon_Social {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .icon_Social a {
+    text-decoration: none; 
+    font-size: 40px;        
+    }
+
+    .icon_Social a:hover {
+      transform: scale(1.1);/*phóng to phần tử lên 110% */
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Ảnh minh họa trên cùng -->
+    <img src="../pictures/anhLogin.svg" alt="ảnh login" class="top">
+    <h2>Login Details</h2>
+
+    <!-- Form -->
+    <div class="form-group">
+      <input type="text" placeholder="Username , email & phone number">
+      <input type="password" placeholder="Password">
+    </div>
+
+    <p class="forgot">Forgot Password ?</p>
+
+    <button class="btn">Login</button>
+
+    <div class="Phan_tach">-----------------------Or Sign up With-------------------</div>
+
+    <!-- icon Social -->
+    <div class="icon_Social">
+      <a href=""><i class="fab fa-google"></i></a>
+      <a href="#"><i class="fab fa-facebook" style="color: #105f9c;"></i></a>
+      <a href="#"><i class="fab fa-apple" style="color: #000000;"></i></a>
+    </div>
+  </div>
+  <p>thử nhiệm commit</p>
+</body>
+</html>

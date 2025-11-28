@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- FIX: Xóa khoảng trắng trong link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link rel="stylesheet" href="../css/trangchinh.css" />
+    <title>Trang chủ - Cloud Storage</title>
+    
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <!-- Sidebar (cột trái) home-->
+        <div class="sidebar-wrapper">
+            <div class="sidebar-item active">
+                <i class="fas fa-house-user"></i>
+                <a href="trangchinh.html">Home</a>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-layer-group"></i>
+                <a href="workspace.html">Workspaces</a>
+            </div>
+            <div class="sidebar-item"><i class="fas fa-search"></i><a href="#">Search</a></div>
+            <div class="sidebar-item"><i class="fas fa-bell"></i><a href="#">Notifications</a></div>
+            <!-- workspace -->
+            <div class="dropdown" id="workspaces-dropdown">
+                <div class="dropdown-label">Workspaces <i class="fas fa-angle-down"></i></div>
+                <div class="dropdown-menu">
+                    <div class="dropdown-item"><i class="fas fa-graduation-cap"></i> College</div>
+                    <div class="dropdown-item"><i class="fas fa-briefcase"></i> Work</div>
+                    <div class="dropdown-item"><i class="fas fa-user-friends"></i> Family</div>
+                    <div class="dropdown-item"><i class="fas fa-folder"></i> Others</div>
+                </div>
+            </div>
+            <!-- categories -->
+            <div class="dropdown open" id="categories-dropdown">
+                <div class="dropdown-label">Categories <i class="fas fa-angle-down"></i></div>
+                <div class="dropdown-menu">
+                    <a href="Category_document.html" class="dropdown-item">
+                        <i class="fas fa-file-lines"></i> Documents
+                    </a>
+                    <a href="category_photo.html" class="dropdown-item">
+                        <i class="fas fa-images"></i> Photos
+                    </a>
+                    <a href="category_video.html" class="dropdown-item">
+                        <i class="fas fa-video"></i> Videos
+                    </a>
+
+                    <a href="category_audio.html" class="dropdown-item">
+                        <i class="fas fa-music"></i> Audio
+                    </a>
+                    <a href="share.html" class="dropdown-item">
+                        <i class="fas fa-share-from-square"></i> Shared with me
+                    </a>
+                    <a href="trash.html" class="dropdown-item">
+                        <i class="fas fa-trash-can"></i> Trash
+                    </a>
+                </div>
+            </div>
+            <!-- footer -->
+            <div class="footer">
+                <div class="sidebar-item"><i class="fas fa-cog"></i> Settings</div>
+                <div class="sidebar-item"><i class="far fa-question-circle"></i> Help & Feedback</div>
+            </div>
+        </div>
+
+        <!-- Main Content ( cột giữa ) -->
+        <div class="Tong">
+            <div class="container">
+                <!-- Home -->
+                <div class="Home_Le">
+                    <h1><i class="fas fa-house-user"></i> Home</h1>
+                </div>
+
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text"  id="mainSearch"  placeholder="Search files, folders..."/>
+                </div>
+                <!-- Recently -->
+                <div class="section-header">
+                    <h2>Recently opened</h2>
+                    <a href="#" id="clearRecent">Clear all</a>
+                </div>
+
+                <div class="recently-opened">
+                    <div class="file-card">
+                        <div class="file-icon"><i class="fas fa-folder"></i></div>
+                        <p class="file-name">Công nghệ web</p>
+                    </div>
+                    <div class="file-card">
+                        <div class="file-icon"><i class="far fa-file-word"></i></div>
+                        <p class="file-name">Ly_thuyet_cnw.docx</p>
+                    </div>
+                    <div class="file-card">
+                        <div class="file-icon"><i class="far fa-file-image"></i></div>
+                        <p class="file-name">TruongDaiHocSuPhamHaNoi.jpg</p>
+                    </div>
+                    <div class="file-card">
+                        <div class="file-icon"><i class="far fa-file-excel"></i></div>
+                        <p class="file-name">Thongkediemsomon_cnw.xlsx</p>
+                    </div>
+                </div>
+
+                <!-- Categories Section -->
+                <div class="section-header">
+                    <h2>Categories</h2>
+                </div>
+
+                <div class="categories-grid">
+                    <a href="Category_document.html" class="category-card-link">
+                        <div class="category-card">
+                            <i class="fas fa-file-lines"></i>
+                            <h3>Documents</h3>
+                            <span class="file-count">12 files</span>
+                        </div>
+                    </a>
+                    <a href="category_photo.html" class="category-card-link">
+                        <div class="category-card">
+                            <i class="fas fa-images"></i>
+                            <h3>Photos</h3>
+                            <span class="file-count">24 files</span>
+                        </div>
+                    </a>
+                    <a href="category_video.html" class="category-card-link">
+                        <div class="category-card">
+                            <i class="fas fa-video"></i>
+                            <h3>Videos</h3>
+                            <span class="file-count">8 files</span>
+                        </div>
+                    </a>
+                    <a href="category_audio.html" class="category-card-link">
+                        <div class="category-card">
+                            <i class="fas fa-music"></i>
+                            <h3>Audio</h3>
+                            <span class="file-count">5 files</span>
+                        </div>
+                    </a>
+                    <a href="share.html" class="category-card-link">
+                        <div class="category-card">
+                            <i class="fas fa-share-from-square"></i>
+                            <h3>Shared</h3>
+                            <span class="file-count">3 files</span>
+                        </div>
+                    </a>
+                    <a href="trash.html" class="category-card-link">
+                        <div class="category-card">
+                            <i class="fas fa-trash-can"></i>
+                            <h3>Trash</h3>
+                            <span class="file-count">2 files</span>
+                        </div>
+                    </a>
+                </div>
+                <!-- All file -->
+                <div class="section-header">
+                    <h2>All files</h2>
+                    <div class="icon_folder_Home">
+                        <i class="fa-solid fa-bars"></i>
+                    </div>
+                </div>
+
+                <div class="box_name">
+                    <div class="filter-tag">Documents</div>
+                    <div class="filter-tag">Photos</div>
+                    <div class="filter-tag">Videos</div>
+                    <div class="filter-tag">Compressed ZIPs</div>
+                    <div class="filter-tag">Audio</div>
+                    <div class="filter-tag">Select file type</div>
+                </div>
+
+                <div class="folder_con" id="allFiles">
+                    <div class="file-item" data-type="folder"><i class="fas fa-folder"></i> haha</div>
+                    <div class="file-item" data-type="folder"><i class="fas fa-folder"></i> HoangMyLinh</div>
+                    <div class="file-item" data-type="folder"><i class="fas fa-folder"></i> ViThiPhuong</div>
+                    <div class="file-item" data-type="folder"><i class="fas fa-folder"></i> Mon nen tang phat trien web
+                    </div>
+                    <div class="file-item" data-type="email"><i class="far fa-envelope"></i> emailcuatoi</div>
+                    <div class="file-item" data-type="code"><i class="fab fa-html5"></i> duanlon.html</div>
+                    <div class="file-item" data-type="audio"><i class="fas fa-music"></i> nhactrungthu...</div>
+                    <div class="file-item" data-type="archive"><i class="far fa-file-archive"></i>
+                        tonghopcacfileduanlon.zip</div>
+                    <div class="file-item" data-type="video"><i class="fas fa-film"></i> nhacdiem10..</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel (cột phải) -->
+        <div class="right-panel">
+            <div class="user-section">
+                <i class="fas fa-circle-user"></i>
+                <div class="user-name">linh</div>
+            </div>
+
+            <div class="upload-btn">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Upload file
+            </div>
+
+            <div class="quick-links">
+                <div class="quick-link"><a href="#"><i class="fas fa-star"></i> Starred</a></div>
+                <div class="quick-link"><a href="share.html"><i class="fas fa-share-from-square"></i> Shared with me</a>
+                </div>
+                <div class="quick-link"><a href="#"><i class="fas fa-clock"></i> Recent</a></div>
+                <div class="quick-link"><a href="trash.html"><i class="fas fa-trash-can"></i> Trash</a></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle dropdowns
+        document.querySelectorAll('.dropdown-label').forEach(label => {
+            label.addEventListener('click', () => {
+                const parent = label.parentElement;
+                parent.classList.toggle('open');
+            });
+        });
+
+        // Tìm kiếm trong All files
+        document.getElementById('mainSearch').addEventListener('input', function (e) {
+            const query = e.target.value.toLowerCase();
+            const files = document.querySelectorAll('#allFiles .file-item');
+            files.forEach(file => {
+                const name = file.textContent.toLowerCase();
+                file.style.display = name.includes(query) ? 'flex' : 'none';
+            });
+        });
+
+        // Clear recently opened
+        document.getElementById('clearRecent').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (confirm('Clear all recently opened items?')) {
+                document.querySelector('.recently-opened').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #9ca3af;">No recent files</div>';
+            }
+        });
+
+        // Tự động mở dropdown categories khi load trang
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdown = document.getElementById('categories-dropdown');
+            dropdown.classList.add('open');
+        });
+    </script>
+</body>
+
+</html>

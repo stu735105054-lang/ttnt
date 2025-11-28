@@ -1,0 +1,177 @@
+<!-- PHẦN 3: TRANG CATEGORY DETAIL (VD: Documents, Photos...)
+🔹 Mục tiêu:
+Hiển thị tất cả file thuộc loại đó — có thể lọc thêm theo workspace.
+
+🔹 Giao diện:
+Tiêu đề: “Documents”
+Danh sách file (giống All files nhưng chỉ hiển thị .docx, .pdf, .txt…)
+Nút “Back to Home” -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- FIX: Xóa khoảng trắng trong link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link rel="stylesheet" href="../css/trangchinh.css" />
+    <title>Documents - Cloud Storage</title>
+    <style>
+        /* CSS riêng cho trang Category (nếu cần override) */
+        .back-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- Sidebar (giữ nguyên như các trang khác) -->
+        <div class="sidebar-wrapper">
+            <div class="sidebar-item">
+                <i class="fas fa-house-user"></i>
+                <a href="trangchinh.html">Home</a>
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-layer-group"></i>
+                <a href="workspace.html">Workspaces</a>
+            </div>
+            <div class="sidebar-item"><i class="fas fa-search"></i><a href="#">Search</a></div>
+            <div class="sidebar-item"><i class="fas fa-bell"></i><a href="#">Notifications</a></div>
+
+            <div class="dropdown" id="workspaces-dropdown">
+                <div class="dropdown-label">Workspaces <i class="fas fa-angle-down"></i></div>
+                <div class="dropdown-menu">
+                    <div class="dropdown-item"><i class="fas fa-graduation-cap"></i> College</div>
+                    <div class="dropdown-item"><i class="fas fa-briefcase"></i> Work</div>
+                    <div class="dropdown-item"><i class="fas fa-user-friends"></i> Family</div>
+                    <div class="dropdown-item"><i class="fas fa-folder"></i> Others</div>
+                </div>
+            </div>
+
+            <div class="dropdown" id="categories-dropdown">
+                <div class="dropdown-label">Categories <i class="fas fa-angle-down"></i></div>
+                <div class="dropdown-menu">
+                    <div class="dropdown-item"><i class="fas fa-images"></i> Photos</div>
+                    <div class="dropdown-item"><i class="fas fa-video"></i> Videos</div>
+                    <div class="dropdown-item"><i class="fas fa-file-lines"></i> Documents</div>
+                    <div class="dropdown-item"><i class="fas fa-music"></i> Audio</div>
+                    <div class="dropdown-item"><i class="fas fa-share-from-square"></i> Shared with me</div>
+                    <div class="dropdown-item"><i class="fas fa-trash-can"></i> Trash</div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="sidebar-item"><i class="fas fa-cog"></i> Settings</div>
+                <div class="sidebar-item"><i class="far fa-question-circle"></i> Help & Feedback</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="Tong">
+            <div class="container">
+                <!-- Tiêu đề động: thay đổi theo category -->
+                <div class="Home_Le">
+                    <h1><i class="fas fa-file-lines"></i> Documents</h1>
+                    <a href="trangchinh.html" class="back-link">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
+                </div>
+
+                <!-- Thanh tìm kiếm riêng cho category -->
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search documents..." id="categorySearch" />
+                </div>
+
+                <!-- Danh sách file thuộc category -->
+                <div class="section-header">
+                    <h2>All documents</h2>
+                </div>
+
+                <div class="folder_con" id="categoryFiles">
+                    <div class="file-item" data-type="document">
+                        <i class="far fa-file-word"></i> Ly_thuyet_cnw.docx
+                    </div>
+                    <div class="file-item" data-type="document">
+                        <i class="far fa-file-pdf"></i> Research_Paper.pdf
+                    </div>
+                    <div class="file-item" data-type="document">
+                        <i class="far fa-file-excel"></i> Thongkediemsomon_cnw.xlsx
+                    </div>
+                    <div class="file-item" data-type="document">
+                        <i class="fas fa-file-powerpoint"></i> Presentation.pptx
+                    </div>
+                    <div class="file-item" data-type="document">
+                        <i class="fas fa-file-text"></i> notes.txt
+                    </div>
+                    <div class="file-item" data-type="document">
+                        <i class="far fa-file-archive"></i> duanlon.zip
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel (giữ nguyên) -->
+        <div class="right-panel">
+            <div class="user-section">
+                <i class="fas fa-circle-user"></i>
+                <div class="user-name">linh</div>
+            </div>
+
+            <div class="upload-btn">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Upload file
+            </div>
+
+            <div class="quick-links">
+                <div class="quick-link"><i class="fas fa-star"></i> Starred</div>
+                <div class="quick-link"><i class="fas fa-share-from-square"></i> Shared with me</div>
+                <div class="quick-link"><i class="fas fa-clock"></i> Recent</div>
+                <div class="quick-link"><i class="fas fa-trash-can"></i> Trash</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle dropdowns (giống các trang khác)
+        document.querySelectorAll('.dropdown-label').forEach(label => {
+            label.addEventListener('click', () => {
+                const parent = label.parentElement;
+                parent.classList.toggle('open');
+            });
+        });
+
+        // Tìm kiếm trong category
+        document.getElementById('categorySearch').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const files = document.querySelectorAll('#categoryFiles .file-item');
+            files.forEach(file => {
+                const name = file.textContent.toLowerCase();
+                file.style.display = name.includes(query) ? 'flex' : 'none';
+            });
+        });
+
+        // (Tùy chọn) Đổi tiêu đề động theo URL: ?type=photos
+        // Ví dụ: category.html?type=documents
+        /*
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type') || 'documents';
+        const titleMap = {
+            documents: { icon: 'fa-file-lines', name: 'Documents' },
+            photos: { icon: 'fa-images', name: 'Photos' },
+            videos: { icon: 'fa-video', name: 'Videos' },
+            audio: { icon: 'fa-music', name: 'Audio' }
+        };
+        const config = titleMap[type] || titleMap.documents;
+        document.querySelector('.Home_Le h1').innerHTML = 
+            `<i class="fas ${config.icon}"></i> ${config.name}`;
+        */
+    </script>
+</body>
+</html>
