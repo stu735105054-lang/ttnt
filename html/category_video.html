@@ -116,6 +116,14 @@
     </div>
 
     <script>
+// Toggle dropdowns
+document.querySelectorAll('.dropdown-label').forEach(label => {
+    label.addEventListener('click', () => {
+        const parent = label.parentElement;
+        parent.classList.toggle('open');
+    });
+});
+
 // Lấy file đã upload
 const allFiles = JSON.parse(localStorage.getItem('uploadedFiles') || '[]');
 const videoFiles = allFiles.filter(f => f.category === 'video');

@@ -323,6 +323,10 @@
         // Xử lý upload (giả lập)
         uploadBtn.addEventListener('click', () => {
             if (selectedFiles.length === 0) return;
+            
+            // Lưu file vào localStorage
+            saveFilesToStorage(selectedFiles);
+            
             alert(`Uploading ${selectedFiles.length} file(s)...\n(This is a frontend demo. In real app, files would be sent to server.)`);
             // Reset
             selectedFiles = [];
@@ -332,30 +336,33 @@
         });
         // lấy ra đuôi file để dễ chia vào các category
         function getFileCategory(fileName) {
-    const ext = fileName.split('.').pop().toLowerCase();
-    if (['mp3', 'wav', 'ogg', 'm4a', 'flac'].includes(ext)) return 'audio';
-    if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return 'photo';
-    if (['mp4', 'mov', 'avi', 'mkv', 'webm'].includes(ext)) return 'video';
-    if (['pdf', 'doc', 'docx', 'txt', 'rtf', 'odt'].includes(ext)) return 'document';
-    return 'other';
-    // luu file vao localstorage theo category
-    // Lấy danh sách file hiện tại
-let uploadedFiles = JSON.parse(localStorage.getItem('uploadedFiles') || '[]');
+            const ext = fileName.split('.').pop().toLowerCase();
+            if (['mp3', 'wav', 'ogg', 'm4a', 'flac'].includes(ext)) return 'audio';
+            if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return 'photo';
+            if (['mp4', 'mov', 'avi', 'mkv', 'webm'].includes(ext)) return 'video';
+            if (['pdf', 'doc', 'docx', 'txt', 'rtf', 'odt'].includes(ext)) return 'document';
+            return 'other';
+        }
 
-// Thêm file mới
-files.forEach(file => {
-    uploadedFiles.push({
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        category: getFileCategory(file.name),
-        uploadTime: new Date().toISOString()
-    });
-});
+        // Hàm lưu file vào localStorage theo category
+        function saveFilesToStorage(files) {
+            // Lấy danh sách file hiện tại
+            let uploadedFiles = JSON.parse(localStorage.getItem('uploadedFiles') || '[]');
 
-// Lưu lại
-localStorage.setItem('uploadedFiles', JSON.stringify(uploadedFiles));
-}
+            // Thêm file mới
+            files.forEach(file => {
+                uploadedFiles.push({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    category: getFileCategory(file.name),
+                    uploadTime: new Date().toISOString()
+                });
+            });
+
+            // Lưu lại
+            localStorage.setItem('uploadedFiles', JSON.stringify(uploadedFiles));
+        }
     </script>
 </body>
 </html>
