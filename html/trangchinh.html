@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- FIX: Xóa khoảng trắng trong link -->
+    <!-- FIX: Xóa khoảng trắng trong CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
-    <link rel="stylesheet" href="../css/trangchinh.css" />
-
-    <title>Trang chủ - Cloud Storage</title>
+    <link rel="stylesheet" href="../css/base.css" />
+<link rel="stylesheet" href="../css/layout.css" />
+<link rel="stylesheet" href="../css/components.css" />
+<link rel="stylesheet" href="../css/pages/home.css" /><title>Trang chủ - Cloud Storage</title>
     <style>
-        a{
+        a {
             text-decoration: none;
             color: inherit;
         }
@@ -47,24 +48,23 @@
             <div class="dropdown open" id="categories-dropdown">
                 <div class="dropdown-label">Categories <i class="fas fa-angle-down"></i></div>
                 <div class="dropdown-menu">
-                    <a href="Category_document.html" class="dropdown-item">
-                        <i class="fas fa-file-lines"></i><a href="category_document.html"></a> Documents
+                    <a href="category_document.html" class="dropdown-item">
+                        <i class="fas fa-file-lines"></i> Documents
                     </a>
                     <a href="category_photo.html" class="dropdown-item">
-                        <i class="fas fa-images"></i><a href="category_photo.html"> Photos</a>
+                        <i class="fas fa-images"></i> Photos
                     </a>
                     <a href="category_video.html" class="dropdown-item">
-                        <i class="fas fa-video"></i> <a href="category_video.html">Videos</a>
+                        <i class="fas fa-video"></i> Videos
                     </a>
-
                     <a href="category_audio.html" class="dropdown-item">
-                        <i class="fas fa-music"></i> <a href="category_audio.html">Audio</a>
+                        <i class="fas fa-music"></i> Audio
                     </a>
                     <a href="share.html" class="dropdown-item">
-                        <i class="fas fa-share-from-square"></i> <a href="share.html">Shared with me</a>
+                        <i class="fas fa-share-from-square"></i> Shared with me
                     </a>
                     <a href="trash.html" class="dropdown-item">
-                        <i class="fas fa-trash-can"></i> <a href="trash.html">Trash</a>
+                        <i class="fas fa-trash-can"></i> Trash
                     </a>
                 </div>
             </div>
@@ -73,13 +73,13 @@
                 <div class="sidebar-item"><i class="fas fa-cog"></i> Settings</div>
                 <div class="sidebar-item"><i class="far fa-question-circle"></i> Help & Feedback</div>
                 <div class="sidebar-item admin-only" style="display: none;">
-    <i class="fas fa-shield-alt"></i>
-    <a href="admin.html">Admin Panel</a>
-</div>
+                    <i class="fas fa-shield-alt"></i>
+                    <a href="admin.html">Admin Panel</a>
+                </div>
             </div>
         </div>
 
-        <!-- Main Content ( cột giữa ) -->
+        <!-- Main Content (cột giữa) -->
         <div class="Tong">
             <div class="container">
                 <!-- Home -->
@@ -89,7 +89,7 @@
 
                 <div class="search-bar">
                     <i class="fas fa-search"></i>
-                    <input type="text"  id="mainSearch"  placeholder="Search files, folders..."/>
+                    <input type="text" id="mainSearch" placeholder="Search files, folders..." />
                 </div>
                 <!-- Recently -->
                 <div class="section-header">
@@ -122,49 +122,50 @@
                 </div>
 
                 <div class="categories-grid">
-                    <a href="Category_document.html" class="category-card-link">
+                    <a href="category_document.html" class="category-card-link">
                         <div class="category-card">
                             <i class="fas fa-file-lines"></i>
                             <h3>Documents</h3>
-                            <span class="file-count">12 files</span>
+                            <span class="file-count">0 files</span>
                         </div>
                     </a>
                     <a href="category_photo.html" class="category-card-link">
                         <div class="category-card">
                             <i class="fas fa-images"></i>
                             <h3>Photos</h3>
-                            <span class="file-count">24 files</span>
+                            <span class="file-count">0 files</span>
                         </div>
                     </a>
                     <a href="category_video.html" class="category-card-link">
                         <div class="category-card">
                             <i class="fas fa-video"></i>
                             <h3>Videos</h3>
-                            <span class="file-count">8 files</span>
+                            <span class="file-count">0 files</span>
                         </div>
                     </a>
                     <a href="category_audio.html" class="category-card-link">
                         <div class="category-card">
                             <i class="fas fa-music"></i>
                             <h3>Audio</h3>
-                            <span class="file-count">5 files</span>
+                            <span class="file-count">0 files</span>
                         </div>
                     </a>
                     <a href="share.html" class="category-card-link">
                         <div class="category-card">
                             <i class="fas fa-share-from-square"></i>
                             <h3>Shared</h3>
-                            <span class="file-count">3 files</span>
+                            <span class="file-count">0 files</span>
                         </div>
                     </a>
                     <a href="trash.html" class="category-card-link">
                         <div class="category-card">
                             <i class="fas fa-trash-can"></i>
                             <h3>Trash</h3>
-                            <span class="file-count">2 files</span>
+                            <span class="file-count">0 files</span>
                         </div>
                     </a>
                 </div>
+
                 <!-- All file -->
                 <div class="section-header">
                     <h2>All files</h2>
@@ -183,16 +184,15 @@
                 </div>
 
                 <div class="folder_con" id="allFiles">
+                    <!-- Nội dung all files giữ nguyên -->
                     <div class="file-item" data-type="folder"><i class="fas fa-folder"></i> haha</div>
                     <div class="file-item" data-type="folder"><i class="fas fa-folder"></i> HoangMyLinh</div>
                     <div class="file-item" data-type="folder"><i class="fas fa-folder"></i> ViThiPhuong</div>
-                    <div class="file-item" data-type="folder"><i class="fas fa-folder"></i> Mon nen tang phat trien web
-                    </div>
+                    <div class="file-item" data-type="folder"><i class="fas fa-folder"></i> Mon nen tang phat trien web</div>
                     <div class="file-item" data-type="email"><i class="far fa-envelope"></i> emailcuatoi</div>
                     <div class="file-item" data-type="code"><i class="fab fa-html5"></i> duanlon.html</div>
                     <div class="file-item" data-type="audio"><i class="fas fa-music"></i> nhactrungthu...</div>
-                    <div class="file-item" data-type="archive"><i class="far fa-file-archive"></i>
-                        tonghopcacfileduanlon.zip</div>
+                    <div class="file-item" data-type="archive"><i class="far fa-file-archive"></i> tonghopcacfileduanlon.zip</div>
                     <div class="file-item" data-type="video"><i class="fas fa-film"></i> nhacdiem10..</div>
                 </div>
             </div>
@@ -206,83 +206,81 @@
             </div>
 
             <div class="upload-btn">
-                <i class="fa-solid fa-cloud-arrow-up"></i><a href="upload.html"> Upload file</a>
+                <i class="fa-solid fa-cloud-arrow-up"></i> <a href="upload.html">Upload file</a>
             </div>
 
             <div class="quick-links">
                 <div class="quick-link"><a href="#"><i class="fas fa-star"></i> Starred</a></div>
-                <div class="quick-link"><i class="fas fa-share-from-square"></i><a href="share.html"> Shared with me</a>
-                </div>
+                <div class="quick-link"><a href="share.html"><i class="fas fa-share-from-square"></i> Shared with me</a></div>
                 <div class="quick-link"><a href="#"><i class="fas fa-clock"></i> Recent</a></div>
-                <div class="quick-link"><i class="fas fa-trash-can"></i><a href="trash.html"> Trash</a></div>
+                <div class="quick-link"><a href="trash.html"><i class="fas fa-trash-can"></i> Trash</a></div>
             </div>
         </div>
     </div>
 
     <script>
-        let user = JSON.parse(localStorage.getItem('user')) || {};
-document.getElementById('welcome').innerHTML += user.taikhoan || 'Khách';
+        // Đợi DOM load xong
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hiển thị tên người dùng
+            let user = JSON.parse(localStorage.getItem('user')) || {};
+            document.getElementById('welcome').innerHTML += user.taikhoan || 'Khách';
 
-// Hiển thị phần tử dành riêng cho admin
-const adminItems = document.querySelectorAll('.admin-only');
-if (user.quyen === 'admin') {
-    adminItems.forEach(el => el.style.display = 'flex'); // hoặc 'block'
-} else {
-    adminItems.forEach(el => el.style.display = 'none');
-}
-        // Toggle dropdowns
-        document.querySelectorAll('.dropdown-label').forEach(label => {
-            label.addEventListener('click', () => {
-                const parent = label.parentElement;
-                parent.classList.toggle('open');
-            });
-        });
-
-        // Tìm kiếm trong All files
-        document.getElementById('mainSearch').addEventListener('input', function (e) {
-            const query = e.target.value.toLowerCase();
-            const files = document.querySelectorAll('#allFiles .file-item');
-            files.forEach(file => {
-                const name = file.textContent.toLowerCase();
-                file.style.display = name.includes(query) ? 'flex' : 'none';
-            });
-        });
-
-        // Clear recently opened
-        document.getElementById('clearRecent').addEventListener('click', function (e) {
-            e.preventDefault();
-            if (confirm('Clear all recently opened items?')) {
-                document.querySelector('.recently-opened').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #9ca3af;">No recent files</div>';
+            // Hiển thị Admin Panel nếu là admin
+            const adminItems = document.querySelectorAll('.admin-only');
+            if (user.quyen === 'admin') {
+                adminItems.forEach(el => el.style.display = 'flex');
+            } else {
+                adminItems.forEach(el => el.style.display = 'none');
             }
-        });
 
-        // Tự động mở dropdown categories khi load trang
-        document.addEventListener('DOMContentLoaded', () => {
-            const dropdown = document.getElementById('categories-dropdown');
-            dropdown.classList.add('open');
+            // Toggle dropdowns
+            document.querySelectorAll('.dropdown-label').forEach(label => {
+                label.addEventListener('click', () => {
+                    const parent = label.parentElement;
+                    parent.classList.toggle('open');
+                });
+            });
+
+            // Cập nhật tổng số file từ localStorage
+            const allFiles = JSON.parse(localStorage.getItem('uploadedFiles') || '[]');
+            const counts = {
+                document: allFiles.filter(f => f.category === 'document').length,
+                photo: allFiles.filter(f => f.category === 'photo').length,
+                video: allFiles.filter(f => f.category === 'video').length,
+                audio: allFiles.filter(f => f.category === 'audio').length
+            };
+
+            document.querySelectorAll('.category-card').forEach(card => {
+                const title = card.querySelector('h3').textContent.trim();
+                let count = 0;
+                if (title === 'Documents') count = counts.document;
+                else if (title === 'Photos') count = counts.photo;
+                else if (title === 'Videos') count = counts.video;
+                else if (title === 'Audio') count = counts.audio;
+                card.querySelector('.file-count').textContent = `${count} files`;
+            });
+
+            // Tìm kiếm
+            document.getElementById('mainSearch').addEventListener('input', function (e) {
+                const query = e.target.value.toLowerCase();
+                document.querySelectorAll('#allFiles .file-item').forEach(file => {
+                    const name = file.textContent.toLowerCase();
+                    file.style.display = name.includes(query) ? 'flex' : 'none';
+                });
+            });
+
+            // Clear recent
+            document.getElementById('clearRecent').addEventListener('click', function (e) {
+                e.preventDefault();
+                if (confirm('Clear all recently opened items?')) {
+                    document.querySelector('.recently-opened').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #9ca3af;">No recent files</div>';
+                }
+            });
+
+            // Mở sẵn dropdown categories
+            document.getElementById('categories-dropdown').classList.add('open');
         });
     </script>
-     <!-- cap nhap tong the -->
-    <script>
-const allFiles = JSON.parse(localStorage.getItem('uploadedFiles') || '[]');
-const counts = {
-    document: allFiles.filter(f => f.category === 'document').length,
-    photo: allFiles.filter(f => f.category === 'photo').length,
-    video: allFiles.filter(f => f.category === 'video').length,
-    audio: allFiles.filter(f => f.category === 'audio').length
-};
-
-// Cập nhật từng thẻ
-document.querySelectorAll('.category-card').forEach(card => {
-    const title = card.querySelector('h3').textContent.trim();
-    let count = 0;
-    if (title === 'Documents') count = counts.document;
-    else if (title === 'Photos') count = counts.photo;
-    else if (title === 'Videos') count = counts.video;
-    else if (title === 'Audio') count = counts.audio;
-    card.querySelector('.file-count').textContent = `${count} files`;
-});
-</script>
 </body>
 
 </html>
