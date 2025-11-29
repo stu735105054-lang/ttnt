@@ -45,7 +45,8 @@
                     <div class="dropdown-item"><i class="fas fa-file-lines"></i><a href="category_document.html"> Documents</a></div>
                     <div class="dropdown-item"><i class="fas fa-music"></i><a href="category_audio.html"> Audio</a></div>
                     <div class="dropdown-item"><i class="fas fa-share-from-square"></i><a href="share.html"> Shared with me</a></div>
-                    <div class="dropdown-item"><i class="fas fa-trash-can"></i> <a href="trash.html">Trash</a></div></div>
+                    <div class="dropdown-item"><i class="fas fa-trash-can"></i> <a href="trash.html">Trash</a></div>
+                </div>
             </div>
 
             <div class="footer">
@@ -136,7 +137,7 @@ if (photoFiles.length === 0) {
     photoFiles.forEach(file => {
         const div = document.createElement('div');
         div.className = 'file-item';
-        div.innerHTML = `<i class="fas fa-image"></i> ${file.name}`;
+        div.innerHTML = `<i class="far fa-file-image"></i> ${file.name}`;
         container.appendChild(div);
     });
 }
