@@ -7,8 +7,14 @@
     <!-- FIX: Xóa khoảng trắng trong link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
     <link rel="stylesheet" href="../css/trangchinh.css" />
+
     <title>Trang chủ - Cloud Storage</title>
-    
+    <style>
+        a{
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
 </head>
 
 <body>
@@ -18,7 +24,9 @@
             <div class="sidebar-item active">
                 <i class="fas fa-house-user"></i>
                 <a href="trangchinh.html">Home</a>
+                <p id="welcome">Xin chào bạn: </p>
             </div>
+
             <div class="sidebar-item">
                 <i class="fas fa-layer-group"></i>
                 <a href="workspace.html">Workspaces</a>
@@ -40,23 +48,23 @@
                 <div class="dropdown-label">Categories <i class="fas fa-angle-down"></i></div>
                 <div class="dropdown-menu">
                     <a href="Category_document.html" class="dropdown-item">
-                        <i class="fas fa-file-lines"></i> Documents
+                        <i class="fas fa-file-lines"></i><a href="category_document.html"></a> Documents
                     </a>
                     <a href="category_photo.html" class="dropdown-item">
-                        <i class="fas fa-images"></i> Photos
+                        <i class="fas fa-images"></i><a href="category_photo.html"> Photos</a>
                     </a>
                     <a href="category_video.html" class="dropdown-item">
-                        <i class="fas fa-video"></i> Videos
+                        <i class="fas fa-video"></i> <a href="category_video.html">Videos</a>
                     </a>
 
                     <a href="category_audio.html" class="dropdown-item">
-                        <i class="fas fa-music"></i> Audio
+                        <i class="fas fa-music"></i> <a href="category_audio.html">Audio</a>
                     </a>
                     <a href="share.html" class="dropdown-item">
-                        <i class="fas fa-share-from-square"></i> Shared with me
+                        <i class="fas fa-share-from-square"></i> <a href="share.html">Shared with me</a>
                     </a>
                     <a href="trash.html" class="dropdown-item">
-                        <i class="fas fa-trash-can"></i> Trash
+                        <i class="fas fa-trash-can"></i> <a href="trash.html">Trash</a>
                     </a>
                 </div>
             </div>
@@ -64,6 +72,10 @@
             <div class="footer">
                 <div class="sidebar-item"><i class="fas fa-cog"></i> Settings</div>
                 <div class="sidebar-item"><i class="far fa-question-circle"></i> Help & Feedback</div>
+                <div class="sidebar-item admin-only" style="display: none;">
+    <i class="fas fa-shield-alt"></i>
+    <a href="admin.html">Admin Panel</a>
+</div>
             </div>
         </div>
 
@@ -194,20 +206,30 @@
             </div>
 
             <div class="upload-btn">
-                <i class="fa-solid fa-cloud-arrow-up"></i> Upload file
+                <i class="fa-solid fa-cloud-arrow-up"></i><a href="upload.html"> Upload file</a>
             </div>
 
             <div class="quick-links">
                 <div class="quick-link"><a href="#"><i class="fas fa-star"></i> Starred</a></div>
-                <div class="quick-link"><a href="share.html"><i class="fas fa-share-from-square"></i> Shared with me</a>
+                <div class="quick-link"><i class="fas fa-share-from-square"></i><a href="share.html"> Shared with me</a>
                 </div>
                 <div class="quick-link"><a href="#"><i class="fas fa-clock"></i> Recent</a></div>
-                <div class="quick-link"><a href="trash.html"><i class="fas fa-trash-can"></i> Trash</a></div>
+                <div class="quick-link"><i class="fas fa-trash-can"></i><a href="trash.html"> Trash</a></div>
             </div>
         </div>
     </div>
 
     <script>
+        let user = JSON.parse(localStorage.getItem('user')) || {};
+document.getElementById('welcome').innerHTML += user.taikhoan || 'Khách';
+
+// Hiển thị phần tử dành riêng cho admin
+const adminItems = document.querySelectorAll('.admin-only');
+if (user.quyen === 'admin') {
+    adminItems.forEach(el => el.style.display = 'flex'); // hoặc 'block'
+} else {
+    adminItems.forEach(el => el.style.display = 'none');
+}
         // Toggle dropdowns
         document.querySelectorAll('.dropdown-label').forEach(label => {
             label.addEventListener('click', () => {
@@ -240,6 +262,27 @@
             dropdown.classList.add('open');
         });
     </script>
+     <!-- cap nhap tong the -->
+    <script>
+const allFiles = JSON.parse(localStorage.getItem('uploadedFiles') || '[]');
+const counts = {
+    document: allFiles.filter(f => f.category === 'document').length,
+    photo: allFiles.filter(f => f.category === 'photo').length,
+    video: allFiles.filter(f => f.category === 'video').length,
+    audio: allFiles.filter(f => f.category === 'audio').length
+};
+
+// Cập nhật từng thẻ
+document.querySelectorAll('.category-card').forEach(card => {
+    const title = card.querySelector('h3').textContent.trim();
+    let count = 0;
+    if (title === 'Documents') count = counts.document;
+    else if (title === 'Photos') count = counts.photo;
+    else if (title === 'Videos') count = counts.video;
+    else if (title === 'Audio') count = counts.audio;
+    card.querySelector('.file-count').textContent = `${count} files`;
+});
+</script>
 </body>
 
 </html>

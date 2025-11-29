@@ -133,6 +133,38 @@
       <a href="#"><i class="fab fa-apple" style="color: #000000;"></i></a>
     </div>
   </div>
-  <p>thử nhiệm commit</p>
+  <script>
+  function thongtinLogin() {
+    const usernameInput = document.querySelector('.form-group input[type="text"]').value.trim();
+    const password = document.querySelector('.form-group input[type="password"]').value;
+
+    if (!usernameInput || !password) {
+      alert('Vui lòng nhập đầy đủ thông tin đăng nhập.');
+      return;
+    }
+
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    
+    // Kiểm tra theo email (vì Sign Up chỉ lưu email, không có username/phone)
+    const user = users.find(u => u.email === usernameInput && u.password === password);
+
+    if (!user) {
+      alert('Thông tin đăng nhập không đúng. Vui lòng thử lại.');
+      return;
+    }
+
+    alert('Đăng nhập thành công! Chào mừng ' + user.firstName + ' ' + user.lastName);
+    localStorage.setItem('loggedInUser', JSON.stringify(user));
+    window.location.href = 'trangchinh.html'; 
+  }
+
+  // Gắn sự kiện cho nút Login
+  document.querySelector('.btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    thongtinLogin();
+  });
+</script>
+
+  </script>
 </body>
 </html>

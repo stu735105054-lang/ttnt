@@ -1,14 +1,361 @@
- <!-- PHẦN 5: TRANG UPLOAD & DRAG & DROP
-🔹 Mục tiêu:
-Cho phép người dùng kéo thả file lên để upload. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vi phuong cute</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- FIX: Xóa khoảng trắng trong CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link rel="stylesheet" href="../css/trangchinh.css" />
+    <title>Upload - Cloud Storage</title>
+    <style>
+        .back-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+        .back-link:hover { text-decoration: underline; }
+
+        /* Drag & Drop Area */
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #f9fafb;
+            transition: background-color 0.3s, border-color 0.3s;
+            cursor: pointer;
+            margin-bottom: 24px;
+        }
+        .upload-area.drag-over {
+            background-color: #dbeafe;
+            border-color: #3b82f6;
+        }
+        .upload-icon {
+            font-size: 48px;
+            color: #6b7280;
+            margin-bottom: 16px;
+        }
+        .upload-text h3 {
+            margin: 0 0 8px;
+            color: #1f2937;
+            font-size: 18px;
+        }
+        .upload-text p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        .browse-btn {
+            margin-top: 16px;
+            padding: 8px 16px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .browse-btn:hover {
+            background: #2563eb;
+        }
+
+        /* Hidden file input */
+        #fileInput {
+            display: none;
+        }
+
+        /* Danh sách file đã chọn */
+        .file-preview {
+            margin-top: 20px;
+        }
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .file-icon {
+            margin-right: 12px;
+            color: #4f46e5;
+            font-size: 18px;
+        }
+        .file-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 8px;
+        }
+        .remove-btn {
+            color: #ef4444;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Nút upload */
+        .confirm-upload-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .confirm-upload-btn:hover {
+            background: #059669;
+        }
+        .confirm-upload-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        /* Hỗ trợ icon theo loại file */
+        .file-icon.pdf { color: #ef4444; }
+        .file-icon.video { color: #dc2626; }
+        .file-icon.image { color: #059669; }
+        .file-icon.audio { color: #8b5cf6; }
+        .file-icon.doc { color: #3b82f6; }
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="main-wrapper">
+        <!-- Sidebar (giữ nguyên như trash.html) -->
+        <div class="sidebar-wrapper">
+            <div class="sidebar-item"><i class="fas fa-house-user"></i><a href="trangchinh.html">Home</a></div>
+            <div class="sidebar-item"><i class="fas fa-layer-group"></i><a href="workspace.html">Workspaces</a></div>
+            <div class="sidebar-item"><i class="fas fa-search"></i><a href="#">Search</a></div>
+            <div class="sidebar-item"><i class="fas fa-bell"></i><a href="#">Notifications</a></div>
+
+            <div class="dropdown" id="workspaces-dropdown">
+                <div class="dropdown-label">Workspaces <i class="fas fa-angle-down"></i></div>
+                <div class="dropdown-menu">
+                    <div class="dropdown-item"><i class="fas fa-graduation-cap"></i> College</div>
+                    <div class="dropdown-item"><i class="fas fa-briefcase"></i> Work</div>
+                    <div class="dropdown-item"><i class="fas fa-user-friends"></i> Family</div>
+                    <div class="dropdown-item"><i class="fas fa-folder"></i> Others</div>
+                </div>
+            </div>
+
+            <div class="dropdown" id="categories-dropdown">
+                <div class="dropdown-label">Categories <i class="fas fa-angle-down"></i></div>
+                <div class="dropdown-menu">
+                    <div class="dropdown-item"><i class="fas fa-images"></i><a href="category_photo.html"> Photos</a></div>
+                    <div class="dropdown-item"><i class="fas fa-video"></i><a href="category_video.html"> Videos</a></div>
+                    <div class="dropdown-item"><i class="fas fa-file-lines"></i><a href="category_document.html"> Documents</a></div>
+                    <div class="dropdown-item"><i class="fas fa-music"></i><a href="category_audio.html"> Audio</a></div>
+                    <div class="dropdown-item"><i class="fas fa-share-from-square"></i><a href="share.html"> Shared with me</a></div>
+                    <div class="dropdown-item"><i class="fas fa-trash-can"></i> <a href="trash.html">Trash</a></div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="sidebar-item"><i class="fas fa-cog"></i> Settings</div>
+                <div class="sidebar-item"><i class="far fa-question-circle"></i> Help & Feedback</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="Tong">
+            <div class="container">
+                <div class="Home_Le">
+                    <h1><i class="fa-solid fa-cloud-arrow-up"></i> Upload</h1>
+                    <a href="trangchinh.html" class="back-link">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
+                </div>
+
+                <!-- Drag & Drop Area -->
+                <div class="upload-area" id="dropArea">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="upload-text">
+                        <h3>Drag & drop your files here</h3>
+                        <p>Supports: PDF, DOC, XLS, Images, Audio, Video</p>
+                        <button type="button" class="browse-btn">Browse files</button>
+                    </div>
+                    <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.mp3,.wav,.mp4,.mov,.avi" />
+                </div>
+
+                <!-- Preview files -->
+                <div class="file-preview" id="filePreview"></div>
+
+                <!-- Confirm Upload Button -->
+                <button class="confirm-upload-btn" id="uploadBtn" disabled>
+                    <i class="fas fa-paper-plane"></i> Upload Files
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Panel (giữ nguyên) -->
+        <div class="right-panel">
+            <div class="user-section">
+                <i class="fas fa-circle-user"></i>
+                <div class="user-name">linh</div>
+            </div>
+
+            <div class="upload-btn">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Upload file
+            </div>
+
+            <div class="quick-links">
+                <div class="quick-link"><a href="#"><i class="fas fa-star"></i> Starred</a></div>
+                <div class="quick-link"><i class="fas fa-share-from-square"></i><a href="share.html"> Shared with me</a>
+                </div>
+                <div class="quick-link"><a href="#"><i class="fas fa-clock"></i> Recent</a></div>
+                <div class="quick-link"><i class="fas fa-trash-can"></i><a href="trash.html"> Trash</a></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle dropdowns
+        document.querySelectorAll('.dropdown-label').forEach(label => {
+            label.addEventListener('click', () => {
+                const parent = label.parentElement;
+                parent.classList.toggle('open');
+            });
+        });
+
+        const dropArea = document.getElementById('dropArea');
+        const fileInput = document.getElementById('fileInput');
+        const filePreview = document.getElementById('filePreview');
+        const uploadBtn = document.getElementById('uploadBtn');
+        let selectedFiles = [];
+
+        // Mở file picker khi nhấn "Browse files"
+        dropArea.querySelector('.browse-btn').addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Xử lý chọn file qua input
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        // Xử lý kéo thả
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.classList.add('drag-over');
+        });
+
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('drag-over');
+        });
+
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('drag-over');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        // Xử lý file đã chọn
+        function handleFiles(files) {
+            const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'image/jpeg', 'image/png', 'image/gif',
+                'audio/mpeg', 'audio/wav', 'audio/ogg',
+                'video/mp4', 'video/quicktime', 'video/x-msvideo'];
+            
+            for (let file of files) {
+                if (allowedTypes.includes(file.type)) {
+                    selectedFiles.push(file);
+                }
+            }
+            renderFilePreview();
+            uploadBtn.disabled = selectedFiles.length === 0;
+        }
+
+        // Hiển thị preview
+        function renderFilePreview() {
+            filePreview.innerHTML = '';
+            selectedFiles.forEach((file, index) => {
+                const div = document.createElement('div');
+                div.className = 'file-item';
+
+                let iconClass = 'fas fa-file';
+                if (file.type.startsWith('image/')) iconClass = 'fas fa-image image';
+                else if (file.type.startsWith('audio/')) iconClass = 'fas fa-music audio';
+                else if (file.type.startsWith('video/')) iconClass = 'fas fa-video video';
+                else if (file.type === 'application/pdf') iconClass = 'fas fa-file-pdf pdf';
+                else if (file.type.includes('word') || file.type.includes('document')) iconClass = 'fas fa-file-word doc';
+                else if (file.type.includes('sheet') || file.type.includes('excel')) iconClass = 'fas fa-file-excel doc';
+
+                div.innerHTML = `
+                    <i class="file-icon ${iconClass}"></i>
+                    <span>${file.name} (${(file.size / 1024).toFixed(1)} KB)</span>
+                    <div class="file-actions">
+                        <button class="remove-btn" data-index="${index}">✕</button>
+                    </div>
+                `;
+                filePreview.appendChild(div);
+            });
+
+            // Gắn sự kiện xóa
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = parseInt(btn.dataset.index);
+                    selectedFiles.splice(idx, 1);
+                    renderFilePreview();
+                    uploadBtn.disabled = selectedFiles.length === 0;
+                });
+            });
+        }
+
+        // Xử lý upload (giả lập)
+        uploadBtn.addEventListener('click', () => {
+            if (selectedFiles.length === 0) return;
+            alert(`Uploading ${selectedFiles.length} file(s)...\n(This is a frontend demo. In real app, files would be sent to server.)`);
+            // Reset
+            selectedFiles = [];
+            fileInput.value = '';
+            renderFilePreview();
+            uploadBtn.disabled = true;
+        });
+        // lấy ra đuôi file để dễ chia vào các category
+        function getFileCategory(fileName) {
+    const ext = fileName.split('.').pop().toLowerCase();
+    if (['mp3', 'wav', 'ogg', 'm4a', 'flac'].includes(ext)) return 'audio';
+    if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return 'photo';
+    if (['mp4', 'mov', 'avi', 'mkv', 'webm'].includes(ext)) return 'video';
+    if (['pdf', 'doc', 'docx', 'txt', 'rtf', 'odt'].includes(ext)) return 'document';
+    return 'other';
+    // luu file vao localstorage theo category
+    // Lấy danh sách file hiện tại
+let uploadedFiles = JSON.parse(localStorage.getItem('uploadedFiles') || '[]');
+
+// Thêm file mới
+files.forEach(file => {
+    uploadedFiles.push({
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        category: getFileCategory(file.name),
+        uploadTime: new Date().toISOString()
+    });
+});
+
+// Lưu lại
+localStorage.setItem('uploadedFiles', JSON.stringify(uploadedFiles));
+}
+    </script>
 </body>
 </html>

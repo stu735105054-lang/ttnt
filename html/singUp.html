@@ -103,7 +103,7 @@
     <form>
       <input type="text" placeholder="First name"> 
       <input type="text" placeholder="Last name">
-      <input type="email" placeholder="Email address">
+      <input type="email" placeholder="Email">
       <input type="password" placeholder="Password">
       <input type="password" placeholder="Confirm Password">
       <button class="btn_Account">CREATE ACCOUNT</button>
@@ -116,6 +116,61 @@
     </div>
   </div>
 </div>
+ <script>
+  function handleSignup() {
+    const firstName = document.querySelector('input[placeholder="First name"]').value.trim();
+    const lastName = document.querySelector('input[placeholder="Last name"]').value.trim();
+    const email = document.querySelector('input[placeholder="Email"]').value.trim();
+    const password = document.querySelector('input[placeholder="Password"]').value;
+    const confirmPassword = document.querySelector('input[placeholder="Confirm Password"]').value;
 
+    // Kiểm tra rỗng
+    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+      alert('Vui lòng điền đầy đủ thông tin!');
+      return;
+    }
+
+    // Kiểm tra email hợp lệ
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      alert('Email không hợp lệ!');
+      return;
+    }
+
+    // Kiểm tra mật khẩu trùng
+    if (password !== confirmPassword) {
+      alert('Mật khẩu xác nhận không khớp!');
+      return;
+    }
+
+    // Lấy danh sách người dùng hiện có
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+
+    // Kiểm tra email đã tồn tại chưa
+    if (users.some(u => u.email === email)) {
+      alert('Email này đã được đăng ký!');
+      return;
+    }
+
+    // Tạo tài khoản mới
+    const newUser = {
+      firstName,
+      lastName,
+      email,
+      password,
+      
+    };
+
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('Đăng ký thành công! Bạn có thể đăng nhập ngay.');
+    window.location.href = 'Login.html'; // Chuyển sang trang login
+  }
+
+  // Gắn sự kiện khi nhấn nút "CREATE ACCOUNT"
+  document.querySelector('.btn_Account').addEventListener('click', function(e) {
+    e.preventDefault(); // Ngăn reload trang do form submit
+    handleSignup();
+  });
+</script>
 </body>
 </html>
