@@ -178,13 +178,14 @@
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));
     alert('Đăng ký thành công! Bạn có thể đăng nhập ngay.');
-    window.location.href = 'Login.html'; // Chuyển sang trang login
+    window.location.href = 'login.html'; // Chuyển sang trang login
   }
 
   // Gắn sự kiện khi nhấn nút "CREATE ACCOUNT"
   document.querySelector('.btn_Account').addEventListener('click', function(e) {
     e.preventDefault(); // Ngăn reload trang do form submit
     handleSignup();
+    
   });
 </script>
 </body>

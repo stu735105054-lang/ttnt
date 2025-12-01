@@ -133,22 +133,14 @@
       <a href="#"><i class="fab fa-apple" style="color: #000000;"></i></a>
     </div>
   </div>
-  <script>
+ <script>
   // Khởi tạo người dùng mặc định nếu chưa có
   if (!localStorage.getItem('users')) {
     localStorage.setItem('users', JSON.stringify([
-        { taikhoan: 'linh', hoten: 'Hoàng My Linh', email: 'linh@example.com', password: '123456', quyen: 'user', status: 'active' },
-        { taikhoan: 'admin', hoten: 'Administrator', email: 'admin@example.com', password: '123456admin', quyen: 'admin', status: 'active' },
-        { taikhoan: 'phuong', hoten: 'Vì Thị Phương', email: 'phuong@example.com', password: '123456', quyen: 'user', status: 'inactive' }
+      { taikhoan: 'linh', hoten: 'Hoàng My Linh', email: 'linh@example.com', password: '123456', quyen: 'user', status: 'active' },
+      { taikhoan: 'admin', hoten: 'Administrator', email: 'admin@example.com', password: '123456', quyen: 'admin', status: 'active' },
+      { taikhoan: 'phuong', hoten: 'Vì Thị Phương', email: 'phuong@example.com', password: '123456', quyen: 'user', status: 'inactive' }
     ]));
-  }
-  
-  // Đảm bảo tài khoản admin luôn tồn tại
-  const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
-  const adminExists = existingUsers.some(u => u.taikhoan === 'admin');
-  if (!adminExists) {
-    existingUsers.push({ taikhoan: 'admin', hoten: 'Administrator', email: 'admin@example.com', password: '123456', quyen: 'admin', status: 'active' });
-    localStorage.setItem('users', JSON.stringify(existingUsers));
   }
 
   function thongtinLogin() {
@@ -161,8 +153,6 @@
     }
 
     const users = JSON.parse(localStorage.getItem('users')) || [];
-    
-    // Kiểm tra theo email hoặc tài khoản
     const user = users.find(u => (u.email === usernameInput || u.taikhoan === usernameInput) && u.password === password);
 
     if (!user) {
@@ -175,18 +165,17 @@
       return;
     }
 
-    alert('Đăng nhập thành công! Chào mừng ' + user.hoten);
-    localStorage.setItem('user', JSON.stringify(user)); // Đổi tên key từ 'loggedInUser' sang 'user'
-    window.location.href = 'trangchinh.html'; 
+    const displayName = user.hoten || user.taikhoan || 'Người dùng';
+    alert(`Đăng nhập thành công! Chào mừng ${displayName}`);
+    localStorage.setItem('user', JSON.stringify(user));
+    window.location.href = 'trangchinh.html';
   }
 
-  // Gắn sự kiện cho nút Login
   document.querySelector('.btn').addEventListener('click', function(e) {
     e.preventDefault();
     thongtinLogin();
   });
 </script>
 
-  </script>
 </body>
 </html>

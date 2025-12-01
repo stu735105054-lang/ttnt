@@ -195,39 +195,24 @@
 
         <!-- Main Content (Chỉ thay đổi phần này) -->
         <div class="Tong">
-            <div class="container">
-                <div class="admin-content">
-                    <div class="admin-header">
-                        <h1><i class="fas fa-users"></i> Quản lý người dùng</h1>
-                        <div class="search-filter">
-                            <input type="text" id="searchUser" placeholder="Tìm kiếm tên hoặc email..." />
-                            <select id="filterStatus">
-                                <option value="">Tất cả trạng thái</option>
-                                <option value="active">Hoạt động</option>
-                                <option value="inactive">Đã khóa</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <table class="users-table">
-                        <thead>
-                            <tr>
-                                <th>Ảnh</th>
-                                <th>Tài khoản</th>
-                                <th>Họ tên</th>
-                                <th>Email</th>
-                                <th>Quyền</th>
-                                <th>Trạng thái</th>
-                                <th>Thao tác</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usersList">
-                            <!-- Dữ liệu sẽ được tải bằng JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+      <div class="container">
+        <div class="admin-content">
+          <h2><i class="fas fa-users"></i> Danh sách người dùng</h2>
+          <table id="usersTable">
+            <thead>
+              <tr>
+                <th>Tài khoản</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Quyền</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody id="usersList"></tbody>
+          </table>
         </div>
+      </div>
+    </div>
 
         <!-- Right Panel -->
         <div class="right-panel">
@@ -248,117 +233,41 @@
     </div>
 
     <script>
-        // Đợi DOM load xong
-        document.addEventListener('DOMContentLoaded', function() {
-            let user = JSON.parse(localStorage.getItem('user')) || {};
-            document.getElementById('welcome').innerHTML += user.hoten || user.taikhoan || 'Khách';
-            
-            // Cập nhật tên người dùng trong thanh bên phải
-            document.getElementById('rightPanelUserName').textContent = user.hoten || user.taikhoan || 'User';
+        // Kiểm tra quyền admin
+    const currentUser = JSON.parse(localStorage.getItem('user'));
+    if (!currentUser || currentUser.quyen !== 'admin') {
+      alert("Chỉ admin mới có quyền truy cập!");
+      window.location.href = 'trangchinh.html';
+    }
 
-            // Hiển thị Admin Panel nếu là admin
-            const adminItems = document.querySelectorAll('.admin-only');
-            if (user.quyen === 'admin') {
-                adminItems.forEach(el => el.style.display = 'flex');
-            } else {
-                alert("Bạn không có quyền truy cập trang này!");
-                window.location.href = "trangchinh.html";
-                return;
-            }
+    // Hiển thị tên người dùng trong sidebar và right panel
+    const displayName = currentUser.hoten || currentUser.taikhoan || 'Khách';
+    document.getElementById('welcome').innerHTML += displayName;
+    document.getElementById('rightPanelUserName').textContent = displayName;
 
-            // Lấy danh sách người dùng từ localStorage
-            let users = JSON.parse(localStorage.getItem('users')) || [
-                { taikhoan: 'linh', hoten: 'Lê Hoàng My Linh', email: 'linh@example.com', password: '123456', quyen: 'user', status: 'active' },
-                { taikhoan: 'admin', hoten: 'Administrator', email: 'admin@example.com', password: '123456admin', quyen: 'admin', status: 'active' },
-                { taikhoan: 'phuong', hoten: 'Vũ Thị Phương', email: 'phuong@example.com', password: '123456', quyen: 'user', status: 'inactive' }
-            ];
-            
-            // Đảm bảo tài khoản admin luôn tồn tại
-            const adminExists = users.some(u => u.taikhoan === 'admin');
-            if (!adminExists) {
-                users.push({ taikhoan: 'admin', hoten: 'Administrator', email: 'admin@example.com', password: '123456', quyen: 'admin', status: 'active' });
-                localStorage.setItem('users', JSON.stringify(users));
-            }
+    // Hiển thị Admin Panel trong sidebar
+    document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'flex');
 
-            // Hàm render danh sách người dùng
-            function renderUsers(usersToRender) {
-                const tbody = document.getElementById('usersList');
-                if (usersToRender.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="7" class="no-users">Không có người dùng nào.</td></tr>`;
-                    return;
-                }
+    // Lấy danh sách người dùng
+    const users = JSON.parse(localStorage.getItem('users')) || [];
 
-                tbody.innerHTML = usersToRender.map(u => `
-                    <tr>
-                        <td><div class="user-avatar">${u.taikhoan.charAt(0).toUpperCase()}</div></td>
-                        <td>${u.taikhoan}</td>
-                        <td>${u.hoten}</td>
-                        <td>${u.email}</td>
-                        <td>${u.quyen === 'admin' ? '<span style="color:#8b5cf6;font-weight:bold;">Admin</span>' : 'User'}</td>
-                        <td><span class="${u.status === 'active' ? 'status-active' : 'status-inactive'}">${u.status === 'active' ? 'Hoạt động' : 'Đã khóa'}</span></td>
-                        <td class="user-actions">
-                            <button class="btn btn-edit" onclick="alert('Chức năng Sửa chưa được triển khai.')">Sửa</button>
-                            <button class="btn ${u.status === 'active' ? 'btn-lock' : 'btn-edit'}" 
-                                    onclick="toggleStatus('${u.taikhoan}')">
-                                ${u.status === 'active' ? 'Khóa' : 'Mở khóa'}
-                            </button>
-                            <button class="btn btn-delete" onclick="deleteUser('${u.taikhoan}')" ${u.taikhoan === 'admin' ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
-                                ${u.taikhoan === 'admin' ? 'Không thể xóa' : 'Xóa'}
-                            </button>
-                        </td>
-                    </tr>
-                `).join('');
-            }
-
-            // Gọi hàm render ban đầu
-            renderUsers(users);
-
-            // Tìm kiếm người dùng
-            document.getElementById('searchUser').addEventListener('input', function(e) {
-                const query = e.target.value.toLowerCase();
-                const filtered = users.filter(u => 
-                    u.taikhoan.toLowerCase().includes(query) || 
-                    u.hoten.toLowerCase().includes(query) || 
-                    u.email.toLowerCase().includes(query)
-                );
-                renderUsers(filtered);
-            });
-
-            // Lọc theo trạng thái
-            document.getElementById('filterStatus').addEventListener('change', function(e) {
-                const status = e.target.value;
-                if (status === '') {
-                    renderUsers(users);
-                } else {
-                    const filtered = users.filter(u => u.status === status);
-                    renderUsers(filtered);
-                }
-            });
-
-            // Hàm xử lý thao tác
-            window.toggleStatus = function(username) {
-                const userIndex = users.findIndex(u => u.taikhoan === username);
-                if (userIndex !== -1) {
-                    users[userIndex].status = users[userIndex].status === 'active' ? 'inactive' : 'active';
-                    localStorage.setItem('users', JSON.stringify(users));
-                    renderUsers(users);
-                }
-            };
-
-            window.deleteUser = function(username) {
-                if (username === 'admin') {
-                    alert('Không thể xóa tài khoản admin hệ thống!');
-                    return;
-                }
-                
-                if (confirm(`Bạn có chắc chắn muốn xóa người dùng "${username}"?`)) {
-                    const filtered = users.filter(u => u.taikhoan !== username);
-                    users = filtered;
-                    localStorage.setItem('users', JSON.stringify(users));
-                    renderUsers(users);
-                }
-            };
-        });
-    </script>
+    // Render bảng
+    const tbody = document.getElementById('usersList');
+    if (users.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:30px;">Chưa có người dùng nào</td></tr>`;
+    } else {
+      tbody.innerHTML = users.map(u => `
+        <tr>
+          <td>${u.taikhoan || ''}</td>
+          <td>${u.hoten || ''}</td>
+          <td>${u.email || ''}</td>
+          <td>${u.quyen === 'admin' ? '<b style="color:#8b5cf6">Admin</b>' : 'User'}</td>
+          <td class="${u.status === 'active' ? 'status-active' : 'status-inactive'}">
+            ${u.status === 'active' ? 'Hoạt động' : 'Đã khóa'}
+          </td>
+        </tr>
+      `).join('');
+    }
+  </script>
 </body>
 </html>
