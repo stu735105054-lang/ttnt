@@ -255,8 +255,8 @@
             let user = JSON.parse(localStorage.getItem('user')) || {};
             document.getElementById('welcome').innerHTML += user.taikhoan || 'Khách';
             
-            // Cập nhật tên người dùng trong thanh bên phải
-            document.getElementById('rightPanelUserName').textContent = user.taikhoan || 'User';
+            // Cập nhật tên người dùng trong thanh bên phải - ưu tiên họ tên nếu có
+            document.getElementById('rightPanelUserName').textContent = user.hoten || user.taikhoan || 'User';
 
             // Hiển thị Admin Panel nếu là admin
             const adminItems = document.querySelectorAll('.admin-only');
@@ -270,9 +270,9 @@
 
             // Lấy danh sách người dùng từ localStorage
             let users = JSON.parse(localStorage.getItem('users')) || [
-                { taikhoan: 'linh', hoten: 'Lê Hoàng My Linh', email: 'linh@example.com', quyen: 'user', status: 'active' },
-                { taikhoan: 'admin', hoten: 'Administrator', email: 'admin@example.com', quyen: 'admin', status: 'active' },
-                { taikhoan: 'phuong', hoten: 'Vũ Thị Phương', email: 'phuong@example.com', quyen: 'user', status: 'inactive' }
+                { taikhoan: 'linh', hoten: 'Lê Hoàng My Linh', email: 'linh@example.com', password: '123456', quyen: 'user', status: 'active' },
+                { taikhoan: 'admin', hoten: 'Administrator', email: 'admin@example.com', password: '123456', quyen: 'admin', status: 'active' },
+                { taikhoan: 'phuong', hoten: 'Vũ Thị Phương', email: 'phuong@example.com', password: '123456', quyen: 'user', status: 'inactive' }
             ];
 
             // Hàm render danh sách người dùng

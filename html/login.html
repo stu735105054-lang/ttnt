@@ -134,6 +134,15 @@
     </div>
   </div>
   <script>
+  // Khởi tạo người dùng mặc định nếu chưa có
+  if (!localStorage.getItem('users')) {
+    localStorage.setItem('users', JSON.stringify([
+        { taikhoan: 'linh', hoten: 'Hoàng My Linh', email: 'linh@example.com', password: '123456', quyen: 'user', status: 'active' },
+        { taikhoan: 'admin', hoten: 'Administrator', email: 'admin@example.com', password: '123456', quyen: 'admin', status: 'active' },
+        { taikhoan: 'phuong', hoten: 'Vì Thị Phương', email: 'phuong@example.com', password: '123456', quyen: 'user', status: 'inactive' }
+    ]));
+  }
+
   function thongtinLogin() {
     const usernameInput = document.querySelector('.form-group input[type="text"]').value.trim();
     const password = document.querySelector('.form-group input[type="password"]').value;
