@@ -116,8 +116,8 @@
 
     <!-- Form -->
     <div class="form-group">
-      <input type="text" placeholder="Username , email & phone number">
-      <input type="password" placeholder="Password">
+      <input type="text" id="usernameInput" placeholder="Username , email & phone number">
+      <input type="password" id="passwordInput" placeholder="Password">
     </div>
 
     <p class="forgot">Forgot Password ?</p>
@@ -142,10 +142,18 @@
         { taikhoan: 'phuong', hoten: 'Vì Thị Phương', email: 'phuong@example.com', password: '123456', quyen: 'user', status: 'inactive' }
     ]));
   }
+  
+  // Đảm bảo tài khoản admin luôn tồn tại
+  const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+  const adminExists = existingUsers.some(u => u.taikhoan === 'admin');
+  if (!adminExists) {
+    existingUsers.push({ taikhoan: 'admin', hoten: 'Administrator', email: 'admin@example.com', password: '123456', quyen: 'admin', status: 'active' });
+    localStorage.setItem('users', JSON.stringify(existingUsers));
+  }
 
   function thongtinLogin() {
-    const usernameInput = document.querySelector('.form-group input[type="text"]').value.trim();
-    const password = document.querySelector('.form-group input[type="password"]').value;
+    const usernameInput = document.getElementById('usernameInput').value.trim();
+    const password = document.getElementById('passwordInput').value;
 
     if (!usernameInput || !password) {
       alert('Vui lòng nhập đầy đủ thông tin đăng nhập.');
@@ -154,12 +162,16 @@
 
     const users = JSON.parse(localStorage.getItem('users')) || [];
     
-    // Kiểm tra theo email (vì Sign Up chỉ lưu email, không có username/phone)
     // Kiểm tra theo email hoặc tài khoản
     const user = users.find(u => (u.email === usernameInput || u.taikhoan === usernameInput) && u.password === password);
 
     if (!user) {
       alert('Thông tin đăng nhập không đúng. Vui lòng thử lại.');
+      return;
+    }
+
+    if (user.status === 'inactive') {
+      alert('Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.');
       return;
     }
 

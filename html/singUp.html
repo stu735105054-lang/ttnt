@@ -131,22 +131,20 @@
     }
 
     // Kiểm tra email hợp lệ
-    if (!/^S+@S+.S+$/ .test(email)) {
-    // Kiểm tra email hợp lệ
-    if (!/^S+@S+.S+$/ .test(email)) {
-      alert(047Email không hợp lệ!047);
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      alert('Email không hợp lệ!');
       return;
     }
 
     // Kiểm tra mật khẩu trùng
     if (password !== confirmPassword) {
-      alert(047Mật khẩu xác nhận không khớp!047);
+      alert('Mật khẩu xác nhận không khớp!');
       return;
     }
     
     // Kiểm tra độ dài mật khẩu
     if (password.length < 6) {
-      alert(047Mật khẩu phải có ít nhất 6 ký tự!047);
+      alert('Mật khẩu phải có ít nhất 6 ký tự!');
       return;
     }
 

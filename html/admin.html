@@ -253,7 +253,7 @@
         // Đợi DOM load xong
         document.addEventListener('DOMContentLoaded', function() {
             let user = JSON.parse(localStorage.getItem('user')) || {};
-            document.getElementById('welcome').innerHTML += user.taikhoan || 'Khách';
+            document.getElementById('welcome').innerHTML += user.hoten || user.taikhoan || 'Khách';
             
             // Cập nhật tên người dùng trong thanh bên phải - ưu tiên họ tên nếu có
             document.getElementById('rightPanelUserName').textContent = user.hoten || user.taikhoan || 'User';
@@ -274,6 +274,13 @@
                 { taikhoan: 'admin', hoten: 'Administrator', email: 'admin@example.com', password: '123456', quyen: 'admin', status: 'active' },
                 { taikhoan: 'phuong', hoten: 'Vũ Thị Phương', email: 'phuong@example.com', password: '123456', quyen: 'user', status: 'inactive' }
             ];
+            
+            // Đảm bảo tài khoản admin luôn tồn tại
+            const adminExists = users.some(u => u.taikhoan === 'admin');
+            if (!adminExists) {
+                users.push({ taikhoan: 'admin', hoten: 'Administrator', email: 'admin@example.com', password: '123456', quyen: 'admin', status: 'active' });
+                localStorage.setItem('users', JSON.stringify(users));
+            }
 
             // Hàm render danh sách người dùng
             function renderUsers(usersToRender) {
