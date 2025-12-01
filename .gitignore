@@ -1,9 +1,1 @@
-```
-# Backup files
-*.backup
-
-# Logs and temp files
-*.log
-*.tmp
-*.swp
-```
+(html/admin.html, html/login.html, html/trangchinh.html)
