@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/pages/home.css" />
+    <title>Admin Panel - Quản lý người dùng</title>
+    <style>
+        /* CSS riêng cho trang admin */
+        .admin-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .admin-header h1 {
+            font-size: 24px;
+            color: #1f2937;
+        }
+
+        .search-filter {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-filter input {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .search-filter select {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .users-table th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .users-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-edit {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background-color: #2563eb;
+        }
+
+        .btn-delete {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: #dc2626;
+        }
+
+        .btn-lock {
+            background-color: #f59e0b;
+            color: white;
+        }
+
+        .btn-lock:hover {
+            background-color: #d97706;
+        }
+
+        .status-active {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .status-inactive {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        .no-users {
+            text-align: center;
+            padding: 40px;
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #374151;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar-wrapper">
+            <div class="sidebar-item active">
+                <i class="fas fa-house-user"></i>
+                <a href="trangchinh.html">Home</a>
+                <p id="welcome">Xin chào bạn: </p>
+            </div>
+            <div class="sidebar-item"><i class="fas fa-search"></i><a href="#">Search</a></div>
+            <div class="sidebar-item"><i class="fas fa-bell"></i><a href="#">Notifications</a></div>
+            <div class="dropdown open" id="categories-dropdown">
+                <div class="dropdown-label">Categories <i class="fas fa-angle-down"></i></div>
+                <div class="dropdown-menu">
+                    <a href="category_document.html" class="dropdown-item">
+                        <i class="fas fa-file-lines"></i> Documents
+                    </a>
+                    <a href="category_photo.html" class="dropdown-item">
+                        <i class="fas fa-images"></i> Photos
+                    </a>
+                    <a href="category_video.html" class="dropdown-item">
+                        <i class="fas fa-video"></i> Videos
+                    </a>
+                    <a href="category_audio.html" class="dropdown-item">
+                        <i class="fas fa-music"></i> Audio
+                    </a>
+                    <a href="share.html" class="dropdown-item">
+                        <i class="fas fa-share-from-square"></i> Shared with me
+                    </a>
+                    <a href="trash.html" class="dropdown-item">
+                        <i class="fas fa-trash-can"></i> Trash
+                    </a>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="sidebar-item"><i class="fas fa-cog"></i> Settings</div>
+                <div class="sidebar-item"><i class="far fa-question-circle"></i> Help & Feedback</div>
+                <div class="sidebar-item admin-only" style="display: none;">
+                    <i class="fas fa-shield-alt"></i>
+                    <a href="admin.html">Admin Panel</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="Tong">
+            <div class="container">
+                <div class="admin-container">
+                    <div class="admin-header">
+                        <h1><i class="fas fa-users"></i> Quản lý người dùng</h1>
+                        <div class="search-filter">
+                            <input type="text" id="searchUser" placeholder="Tìm kiếm tên hoặc email..." />
+                            <select id="filterStatus">
+                                <option value="">Tất cả trạng thái</option>
+                                <option value="active">Hoạt động</option>
+                                <option value="inactive">Đã khóa</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Ảnh</th>
+                                <th>Tài khoản</th>
+                                <th>Họ tên</th>
+                                <th>Email</th>
+                                <th>Quyền</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersList">
+                            <!-- Dữ liệu sẽ được tải bằng JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <div class="user-section">
+                <i class="fas fa-circle-user"></i>
+                <div class="user-name">linh</div>
+            </div>
+            <div class="upload-btn">
+                <i class="fa-solid fa-cloud-arrow-up"></i> <a href="upload.html">Upload file</a>
+            </div>
+            <div class="quick-links">
+                <div class="quick-link"><a href="#"><i class="fas fa-star"></i> Starred</a></div>
+                <div class="quick-link"><a href="share.html"><i class="fas fa-share-from-square"></i> Shared with me</a></div>
+                <div class="quick-link"><a href="#"><i class="fas fa-clock"></i> Recent</a></div>
+                <div class="quick-link"><a href="trash.html"><i class="fas fa-trash-can"></i> Trash</a></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Đợi DOM load xong
+        document.addEventListener('DOMContentLoaded', function() {
+            let user = JSON.parse(localStorage.getItem('user')) || {};
+            document.getElementById('welcome').innerHTML += user.taikhoan || 'Khách';
+
+            // Hiển thị Admin Panel nếu là admin
+            const adminItems = document.querySelectorAll('.admin-only');
+            if (user.quyen === 'admin') {
+                adminItems.forEach(el => el.style.display = 'flex');
+            } else {
+                // Nếu không phải admin, chuyển hướng về trang chủ
+                alert("Bạn không có quyền truy cập trang này!");
+                window.location.href = "trangchinh.html";
+            }
+
+            // Lấy danh sách người dùng từ localStorage
+            let users = JSON.parse(localStorage.getItem('users')) || [
+                { taikhoan: 'linh', hoten: 'Lê Hoàng My Linh', email: 'linh@example.com', quyen: 'user', status: 'active' },
+                { taikhoan: 'admin', hoten: 'Administrator', email: 'admin@example.com', quyen: 'admin', status: 'active' },
+                { taikhoan: 'phuong', hoten: 'Vũ Thị Phương', email: 'phuong@example.com', quyen: 'user', status: 'inactive' }
+            ];
+
+            // Hàm render danh sách người dùng
+            function renderUsers(usersToRender) {
+                const tbody = document.getElementById('usersList');
+                if (usersToRender.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="no-users">Không có người dùng nào.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = usersToRender.map(u => `
+                    <tr>
+                        <td><div class="user-avatar">${u.taikhoan.charAt(0).toUpperCase()}</div></td>
+                        <td>${u.taikhoan}</td>
+                        <td>${u.hoten}</td>
+                        <td>${u.email}</td>
+                        <td>${u.quyen === 'admin' ? '<span style="color:#8b5cf6;font-weight:bold;">Admin</span>' : 'User'}</td>
+                        <td><span class="${u.status === 'active' ? 'status-active' : 'status-inactive'}">${u.status === 'active' ? 'Hoạt động' : 'Đã khóa'}</span></td>
+                        <td class="user-actions">
+                            <button class="btn btn-edit" onclick="editUser('${u.taikhoan}')">Sửa</button>
+                            <button class="btn ${u.status === 'active' ? 'btn-lock' : 'btn-edit'}" 
+                                    onclick="toggleStatus('${u.taikhoan}')">
+                                ${u.status === 'active' ? 'Khóa' : 'Mở khóa'}
+                            </button>
+                            <button class="btn btn-delete" onclick="deleteUser('${u.taikhoan}')">Xóa</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            // Gọi hàm render ban đầu
+            renderUsers(users);
+
+            // Tìm kiếm người dùng
+            document.getElementById('searchUser').addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase();
+                const filtered = users.filter(u => 
+                    u.taikhoan.toLowerCase().includes(query) || 
+                    u.hoten.toLowerCase().includes(query) || 
+                    u.email.toLowerCase().includes(query)
+                );
+                renderUsers(filtered);
+            });
+
+            // Lọc theo trạng thái
+            document.getElementById('filterStatus').addEventListener('change', function(e) {
+                const status = e.target.value;
+                if (status === '') {
+                    renderUsers(users);
+                } else {
+                    const filtered = users.filter(u => u.status === status);
+                    renderUsers(filtered);
+                }
+            });
+
+            // Hàm xử lý thao tác
+            window.editUser = function(username) {
+                alert(`Chỉnh sửa thông tin người dùng: ${username}`);
+                // Có thể mở modal hoặc chuyển sang trang edit
+            };
+
+            window.toggleStatus = function(username) {
+                const userIndex = users.findIndex(u => u.taikhoan === username);
+                if (userIndex !== -1) {
+                    users[userIndex].status = users[userIndex].status === 'active' ? 'inactive' : 'active';
+                    localStorage.setItem('users', JSON.stringify(users));
+                    renderUsers(users);
+                }
+            };
+
+            window.deleteUser = function(username) {
+                if (confirm(`Bạn có chắc chắn muốn xóa người dùng "${username}"?`)) {
+                    const filtered = users.filter(u => u.taikhoan !== username);
+                    users = filtered;
+                    localStorage.setItem('users', JSON.stringify(users));
+                    renderUsers(users);
+                }
+            };
+
+            // Mở sẵn dropdown categories
+            document.getElementById('categories-dropdown').classList.add('open');
+        });
+    </script>
+</body>
+
+</html>
