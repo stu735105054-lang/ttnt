@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,10 +10,10 @@
     <link rel="stylesheet" href="../css/pages/home.css" />
     <title>Admin Panel - Quản lý người dùng</title>
     <style>
-        /* CSS riêng cho trang admin */
-        .admin-container {
+        /* CSS riêng cho phần quản lý người dùng */
+        .admin-content {
             padding: 20px;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
@@ -194,10 +193,10 @@
             </div>
         </div>
 
-        <!-- Main Content -->
+        <!-- Main Content (Chỉ thay đổi phần này) -->
         <div class="Tong">
             <div class="container">
-                <div class="admin-container">
+                <div class="admin-content">
                     <div class="admin-header">
                         <h1><i class="fas fa-users"></i> Quản lý người dùng</h1>
                         <div class="search-filter">
@@ -207,7 +206,6 @@
                                 <option value="active">Hoạt động</option>
                                 <option value="inactive">Đã khóa</option>
                             </select>
-                            <button class="btn btn-edit" onclick="createNewUser()" style="background-color: #10b981; color: white; padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer;">+ Thêm người dùng</button>
                         </div>
                     </div>
 
@@ -255,7 +253,7 @@
             let user = JSON.parse(localStorage.getItem('user')) || {};
             document.getElementById('welcome').innerHTML += user.hoten || user.taikhoan || 'Khách';
             
-            // Cập nhật tên người dùng trong thanh bên phải - ưu tiên họ tên nếu có
+            // Cập nhật tên người dùng trong thanh bên phải
             document.getElementById('rightPanelUserName').textContent = user.hoten || user.taikhoan || 'User';
 
             // Hiển thị Admin Panel nếu là admin
@@ -263,15 +261,15 @@
             if (user.quyen === 'admin') {
                 adminItems.forEach(el => el.style.display = 'flex');
             } else {
-                // Nếu không phải admin, chuyển hướng về trang chủ
                 alert("Bạn không có quyền truy cập trang này!");
                 window.location.href = "trangchinh.html";
+                return;
             }
 
             // Lấy danh sách người dùng từ localStorage
             let users = JSON.parse(localStorage.getItem('users')) || [
                 { taikhoan: 'linh', hoten: 'Lê Hoàng My Linh', email: 'linh@example.com', password: '123456', quyen: 'user', status: 'active' },
-                { taikhoan: 'admin', hoten: 'Administrator', email: 'admin@example.com', password: '123456', quyen: 'admin', status: 'active' },
+                { taikhoan: 'admin', hoten: 'Administrator', email: 'admin@example.com', password: '123456admin', quyen: 'admin', status: 'active' },
                 { taikhoan: 'phuong', hoten: 'Vũ Thị Phương', email: 'phuong@example.com', password: '123456', quyen: 'user', status: 'inactive' }
             ];
             
@@ -299,12 +297,14 @@
                         <td>${u.quyen === 'admin' ? '<span style="color:#8b5cf6;font-weight:bold;">Admin</span>' : 'User'}</td>
                         <td><span class="${u.status === 'active' ? 'status-active' : 'status-inactive'}">${u.status === 'active' ? 'Hoạt động' : 'Đã khóa'}</span></td>
                         <td class="user-actions">
-                            <button class="btn btn-edit" onclick="editUser('${u.taikhoan}')">Sửa</button>
+                            <button class="btn btn-edit" onclick="alert('Chức năng Sửa chưa được triển khai.')">Sửa</button>
                             <button class="btn ${u.status === 'active' ? 'btn-lock' : 'btn-edit'}" 
                                     onclick="toggleStatus('${u.taikhoan}')">
                                 ${u.status === 'active' ? 'Khóa' : 'Mở khóa'}
                             </button>
-                            <button class="btn btn-delete" onclick="deleteUser('${u.taikhoan}')" ${u.taikhoan === 'admin' ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>${u.taikhoan === 'admin' ? 'Không thể xóa' : 'Xóa'}</button>
+                            <button class="btn btn-delete" onclick="deleteUser('${u.taikhoan}')" ${u.taikhoan === 'admin' ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
+                                ${u.taikhoan === 'admin' ? 'Không thể xóa' : 'Xóa'}
+                            </button>
                         </td>
                     </tr>
                 `).join('');
@@ -336,139 +336,6 @@
             });
 
             // Hàm xử lý thao tác
-            window.editUser = function(username) {
-                const user = users.find(u => u.taikhoan === username);
-                if (user) {
-                    // Tạo modal để chỉnh sửa thông tin người dùng
-                    const modal = document.createElement('div');
-                    modal.innerHTML = `
-                        <div class="modal-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;">
-                            <div class="modal-content" style="background: white; padding: 20px; border-radius: 8px; width: 400px; max-width: 90%;">
-                                <h3>Chỉnh sửa người dùng: ${user.taikhoan}</h3>
-                                <div style="margin: 10px 0;">
-                                    <label>Tên đầy đủ:</label>
-                                    <input type="text" id="editHoten" value="${user.hoten}" style="width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px;">
-                                </div>
-                                <div style="margin: 10px 0;">
-                                    <label>Email:</label>
-                                    <input type="email" id="editEmail" value="${user.email}" style="width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px;">
-                                </div>
-                                <div style="margin: 10px 0;">
-                                    <label>Quyền:</label>
-                                    <select id="editQuyen" style="width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px;">
-                                        <option value="user" ${user.quyen === 'user' ? 'selected' : ''}>User</option>
-                                        <option value="admin" ${user.quyen === 'admin' ? 'selected' : ''}>Admin</option>
-                                    </select>
-                                </div>
-                                <div style="margin: 15px 0; display: flex; gap: 10px;">
-                                    <button onclick="saveUser('${user.taikhoan}')" style="flex: 1; padding: 10px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">Lưu</button>
-                                    <button onclick="this.closest('.modal-overlay').remove()" style="flex: 1; padding: 10px; background: #9ca3af; color: white; border: none; border-radius: 4px; cursor: pointer;">Hủy</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    document.body.appendChild(modal);
-                }
-            };
-
-            window.saveUser = function(username) {
-                const hoten = document.getElementById('editHoten').value;
-                const email = document.getElementById('editEmail').value;
-                const quyen = document.getElementById('editQuyen').value;
-                
-                if (!hoten || !email) {
-                    alert('Vui lòng điền đầy đủ thông tin!');
-                    return;
-                }
-                
-                const userIndex = users.findIndex(u => u.taikhoan === username);
-                if (userIndex !== -1) {
-                    users[userIndex].hoten = hoten;
-                    users[userIndex].email = email;
-                    users[userIndex].quyen = quyen;
-                    localStorage.setItem('users', JSON.stringify(users));
-                    renderUsers(users);
-                    document.querySelector('.modal-overlay').remove();
-                    alert('Cập nhật thông tin người dùng thành công!');
-                }
-            };
-            
-            window.createNewUser = function() {
-                // Tạo modal để thêm người dùng mới
-                const modal = document.createElement('div');
-                modal.innerHTML = `
-                    <div class="modal-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;">
-                        <div class="modal-content" style="background: white; padding: 20px; border-radius: 8px; width: 400px; max-width: 90%;">
-                            <h3>Thêm người dùng mới</h3>
-                            <div style="margin: 10px 0;">
-                                <label>Tài khoản:</label>
-                                <input type="text" id="newTaikhoan" placeholder="Tên tài khoản" style="width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px;">
-                            </div>
-                            <div style="margin: 10px 0;">
-                                <label>Tên đầy đủ:</label>
-                                <input type="text" id="newHoten" placeholder="Tên đầy đủ" style="width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px;">
-                            </div>
-                            <div style="margin: 10px 0;">
-                                <label>Email:</label>
-                                <input type="email" id="newEmail" placeholder="Email" style="width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px;">
-                            </div>
-                            <div style="margin: 10px 0;">
-                                <label>Mật khẩu:</label>
-                                <input type="password" id="newPassword" placeholder="Mật khẩu" style="width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px;">
-                            </div>
-                            <div style="margin: 10px 0;">
-                                <label>Quyền:</label>
-                                <select id="newQuyen" style="width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px;">
-                                    <option value="user">User</option>
-                                    <option value="admin">Admin</option>
-                                </select>
-                            </div>
-                            <div style="margin: 15px 0; display: flex; gap: 10px;">
-                                <button onclick="saveNewUser()" style="flex: 1; padding: 10px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer;">Tạo mới</button>
-                                <button onclick="this.closest('.modal-overlay').remove()" style="flex: 1; padding: 10px; background: #9ca3af; color: white; border: none; border-radius: 4px; cursor: pointer;">Hủy</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(modal);
-            };
-            
-            window.saveNewUser = function() {
-                const taikhoan = document.getElementById('newTaikhoan').value;
-                const hoten = document.getElementById('newHoten').value;
-                const email = document.getElementById('newEmail').value;
-                const password = document.getElementById('newPassword').value;
-                const quyen = document.getElementById('newQuyen').value;
-                
-                if (!taikhoan || !hoten || !email || !password) {
-                    alert('Vui lòng điền đầy đủ thông tin!');
-                    return;
-                }
-                
-                // Kiểm tra xem tài khoản đã tồn tại chưa
-                const existingUser = users.find(u => u.taikhoan === taikhoan || u.email === email);
-                if (existingUser) {
-                    alert('Tài khoản hoặc email đã tồn tại!');
-                    return;
-                }
-                
-                // Thêm người dùng mới
-                const newUser = {
-                    taikhoan,
-                    hoten,
-                    email,
-                    password,
-                    quyen,
-                    status: 'active'
-                };
-                
-                users.push(newUser);
-                localStorage.setItem('users', JSON.stringify(users));
-                renderUsers(users);
-                document.querySelector('.modal-overlay').remove();
-                alert('Tạo người dùng mới thành công!');
-            };
-
             window.toggleStatus = function(username) {
                 const userIndex = users.findIndex(u => u.taikhoan === username);
                 if (userIndex !== -1) {
@@ -491,11 +358,7 @@
                     renderUsers(users);
                 }
             };
-
-            // Mở sẵn dropdown categories
-            document.getElementById('categories-dropdown').classList.add('open');
         });
     </script>
 </body>
-
 </html>

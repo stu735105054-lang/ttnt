@@ -131,20 +131,28 @@
     }
 
     // Kiểm tra email hợp lệ
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
-      alert('Email không hợp lệ!');
+
+    if (!/^S+@S+.S+$/ .test(email)) {
+    // Kiểm tra email hợp lệ
+    if (!/^S+@S+.S+$/ .test(email)) {
+      alert("Email không hợp lệ!");
+
       return;
     }
 
     // Kiểm tra mật khẩu trùng
     if (password !== confirmPassword) {
-      alert('Mật khẩu xác nhận không khớp!');
+
+      alert("Mật khẩu xác nhận không khớp!");
+
       return;
     }
     
     // Kiểm tra độ dài mật khẩu
     if (password.length < 6) {
-      alert('Mật khẩu phải có ít nhất 6 ký tự!');
+
+      alert("Mật khẩu phải có ít nhất 6 ký tự!");
+
       return;
     }
 
@@ -156,7 +164,7 @@
       alert('Email này đã được đăng ký!');
       return;
     }
-
+  }
     // Tạo tài khoản mới
     const newUser = {
       taikhoan: email.split('@')[0], // Tạo tên tài khoản từ email
@@ -166,7 +174,7 @@
       quyen: 'user', // Mặc định là user, admin sẽ được cấp sau
       status: 'active'
     };
-
+  
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));
     alert('Đăng ký thành công! Bạn có thể đăng nhập ngay.');
