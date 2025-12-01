@@ -1,1 +1,1 @@
-(html/admin.html, html/login.html, html/trangchinh.html)
+Nothing should be ignored since the changes only include HTML files (source files) and no build artifacts, dependencies, or temporary files.

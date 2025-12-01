@@ -131,22 +131,28 @@
     }
 
     // Kiểm tra email hợp lệ
+
     if (!/^S+@S+.S+$/ .test(email)) {
     // Kiểm tra email hợp lệ
     if (!/^S+@S+.S+$/ .test(email)) {
       alert("Email không hợp lệ!");
+
       return;
     }
 
     // Kiểm tra mật khẩu trùng
     if (password !== confirmPassword) {
+
       alert("Mật khẩu xác nhận không khớp!");
+
       return;
     }
     
     // Kiểm tra độ dài mật khẩu
     if (password.length < 6) {
+
       alert("Mật khẩu phải có ít nhất 6 ký tự!");
+
       return;
     }
 
