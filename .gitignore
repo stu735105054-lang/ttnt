@@ -1,1 +1,9 @@
-Nothing should be ignored based on the provided file changes. The only modified file is `html/category_photo.html`, which is a source file and should not be ignored.
+```
+# Backup files
+*.backup
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+```

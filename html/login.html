@@ -146,15 +146,16 @@
     const users = JSON.parse(localStorage.getItem('users')) || [];
     
     // Kiểm tra theo email (vì Sign Up chỉ lưu email, không có username/phone)
-    const user = users.find(u => u.email === usernameInput && u.password === password);
+    // Kiểm tra theo email hoặc tài khoản
+    const user = users.find(u => (u.email === usernameInput || u.taikhoan === usernameInput) && u.password === password);
 
     if (!user) {
       alert('Thông tin đăng nhập không đúng. Vui lòng thử lại.');
       return;
     }
 
-    alert('Đăng nhập thành công! Chào mừng ' + user.firstName + ' ' + user.lastName);
-    localStorage.setItem('loggedInUser', JSON.stringify(user));
+    alert('Đăng nhập thành công! Chào mừng ' + user.hoten);
+    localStorage.setItem('user', JSON.stringify(user)); // Đổi tên key từ 'loggedInUser' sang 'user'
     window.location.href = 'trangchinh.html'; 
   }
 
