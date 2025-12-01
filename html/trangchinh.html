@@ -202,7 +202,7 @@
         <div class="right-panel">
             <div class="user-section">
                 <i class="fas fa-circle-user"></i>
-                <div class="user-name">linh</div>
+                <div class="user-name" id="rightPanelUserName">linh</div>
             </div>
 
             <div class="upload-btn">
@@ -224,6 +224,9 @@
             // Hiển thị tên người dùng
             let user = JSON.parse(localStorage.getItem('user')) || {};
             document.getElementById('welcome').innerHTML += user.taikhoan || 'Khách';
+            
+            // Cập nhật tên người dùng trong thanh bên phải
+            document.getElementById('rightPanelUserName').textContent = user.taikhoan || 'User';
 
             // Hiển thị Admin Panel nếu là admin
             const adminItems = document.querySelectorAll('.admin-only');
@@ -280,33 +283,33 @@
             // Mở sẵn dropdown categories
             document.getElementById('categories-dropdown').classList.add('open');
             const userSection = document.querySelector('.user-section');
-const userMenu = document.createElement('div');
-userMenu.className = 'user-menu';
-userMenu.innerHTML = `
-    <div class="menu-item"><a href="admin.html"><i class="fas fa-users"></i> Manage Users</a></div>
-    <div class="menu-item"><a href="#"><i class="fas fa-cog"></i> Account Settings</a></div>
-`;
-document.body.appendChild(userMenu);
+            const userMenu = document.createElement('div');
+            userMenu.className = 'user-menu';
+            userMenu.innerHTML = `
+                <div class="menu-item"><a href="admin.html"><i class="fas fa-users"></i> Manage Users</a></div>
+                <div class="menu-item"><a href="#"><i class="fas fa-cog"></i> Account Settings</a></div>
+            `;
+            document.body.appendChild(userMenu);
 
-userSection.addEventListener('mouseenter', function() {
-    if (user.quyen === 'admin') {
-        const rect = userSection.getBoundingClientRect();
-        userMenu.style.display = 'block';
-        userMenu.style.top = `${rect.bottom + window.scrollY}px`;
-        userMenu.style.left = `${rect.left + window.scrollX}px`;
-    }
-});
+            userSection.addEventListener('mouseenter', function() {
+                if (user.quyen === 'admin') {
+                    const rect = userSection.getBoundingClientRect();
+                    userMenu.style.display = 'block';
+                    userMenu.style.top = `${rect.bottom + window.scrollY}px`;
+                    userMenu.style.left = `${rect.left + window.scrollX}px`;
+                }
+            });
 
-userSection.addEventListener('mouseleave', function() {
-    userMenu.style.display = 'none';
-});
+            userSection.addEventListener('mouseleave', function() {
+                userMenu.style.display = 'none';
+            });
 
-// Đảm bảo menu ẩn khi click ra ngoài
-document.addEventListener('click', function(e) {
-    if (!userSection.contains(e.target) && !userMenu.contains(e.target)) {
-        userMenu.style.display = 'none';
-    }
-});
+            // Đảm bảo menu ẩn khi click ra ngoài
+            document.addEventListener('click', function(e) {
+                if (!userSection.contains(e.target) && !userMenu.contains(e.target)) {
+                    userMenu.style.display = 'none';
+                }
+            });
         });
         // Thêm đoạn này vào script của trang chủ (sau khi lấy user)
 if (!localStorage.getItem('users')) {

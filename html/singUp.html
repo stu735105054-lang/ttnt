@@ -131,14 +131,22 @@
     }
 
     // Kiểm tra email hợp lệ
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
-      alert('Email không hợp lệ!');
+    if (!/^S+@S+.S+$/ .test(email)) {
+    // Kiểm tra email hợp lệ
+    if (!/^S+@S+.S+$/ .test(email)) {
+      alert(047Email không hợp lệ!047);
       return;
     }
 
     // Kiểm tra mật khẩu trùng
     if (password !== confirmPassword) {
-      alert('Mật khẩu xác nhận không khớp!');
+      alert(047Mật khẩu xác nhận không khớp!047);
+      return;
+    }
+    
+    // Kiểm tra độ dài mật khẩu
+    if (password.length < 6) {
+      alert(047Mật khẩu phải có ít nhất 6 ký tự!047);
       return;
     }
 
@@ -153,11 +161,12 @@
 
     // Tạo tài khoản mới
     const newUser = {
-      firstName,
-      lastName,
+      taikhoan: email.split('@')[0], // Tạo tên tài khoản từ email
+      hoten: `${firstName} ${lastName}`,
       email,
       password,
-      
+      quyen: 'user', // Mặc định là user, admin sẽ được cấp sau
+      status: 'active'
     };
 
     users.push(newUser);
